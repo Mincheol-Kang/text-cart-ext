@@ -1,0 +1,38 @@
+{
+    "manifest_version": 3,
+    "name": "Text Carts",
+    "description": "사용자가 찜한 텍스트들을 담아두는 텍스트 바구니",
+    "version": "1.2.0",
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "scripting",
+        "storage"
+    ],
+    "host_permissions": [
+        "*://*/*"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "text_cart_icon.png",
+            "32": "text_cart_icon.png",
+            "48": "text_cart_icon.png",
+            "128": "text_cart_icon.png"
+        }
+    },
+    "icons": {
+        "16": "text_cart_icon.png",
+        "32": "text_cart_icon.png",
+        "48": "text_cart_icon.png",
+        "128": "text_cart_icon.png"
+    },
+    "content_scripts": [{
+        "matches": ["http://*/*", "https://*/*"],
+        "js": ["content.js"],
+        "run_at": "document_end"
+    }]
+}
