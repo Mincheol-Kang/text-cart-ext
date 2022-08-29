@@ -6,17 +6,30 @@ window.onload = function(){
         document.execCommand('copy');
     }
 
-    document.addEventListener('click', function (e) {
+    let div_selected_text_list = document.getElementById('div_selected_text_list');
+    div_selected_text_list.onclick = function(e) {
         copyToClipBoard(e.target.innerText);
-    });
+    }
+
+    let selected_text_list = [];
     
     chrome.storage.sync.get('ct_g_selected_text_list', ({ ct_g_selected_text_list }) => {
+        selected_text_list = ct_g_selected_text_list;
         let inner_html = '<ul>';
         ct_g_selected_text_list.forEach(element => {
             inner_html += `<li>${element}</li>`
         });
         inner_html += '</ul>';
-        let div_selected_text_list = document.getElementById('div_selected_text_list');
         div_selected_text_list.innerHTML = inner_html;
     });
+
+    const sendMessageButton = document.getElementById('sendMessage')
+    sendMessageButton.onclick = async function(e) {
+        let queryOptions = { active: true, currentWindow: true };
+        let tabs = await chrome.tabs.query(queryOptions);
+    
+        chrome.tabs.sendMessage(tabs[0].id, {text_list: selected_text_list}, function(response) {
+            console.log(response.status);
+        });
+    }
 }

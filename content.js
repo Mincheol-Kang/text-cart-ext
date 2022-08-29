@@ -62,16 +62,24 @@ function ct_f_copyToClipBoard(clicked_text) {
     document.execCommand('copy');
 }
 
-ct_g_new_div.addEventListener('click', function (e) {
+let ct_g_div_selected_text_list = document.getElementById('ct_g_div_selected_text_list');
+ct_g_div_selected_text_list.onclick = function (e) {
     ct_f_copyToClipBoard(e.target.innerText);
-});
+}
 
 function ct_f_make_list() {
-    let inner_html = '<ul>';
+    let inner_html = '<ul style="margin: 5px; padding-inline-start: 0px;">';
     ct_g_selected_text_list.forEach(element => {
-        inner_html += `<li style="padding: 5px; cursor: pointer;">${element}</li>`
+        inner_html += `<li style="padding: 0px 3px; cursor: pointer;">${element}</li>`
     });
     inner_html += '</ul>';
-    let selected_text_list = document.getElementById('ct_g_div_selected_text_list');
-    selected_text_list.innerHTML = inner_html;
+    ct_g_div_selected_text_list.innerHTML = inner_html;
 }
+
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        ct_g_selected_text_list = request.text_list;
+        ct_f_make_list();
+        sendResponse({status: "done"});
+    }
+);
