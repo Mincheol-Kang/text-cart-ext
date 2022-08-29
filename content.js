@@ -3,13 +3,11 @@ let ct_g_current_text = '';
 
 document.addEventListener('mousemove', function (e) {
     ct_g_current_text = e.target.innerText;
-    // console.log(ct_g_current_text);
 });
 
 document.addEventListener('keydown', function (e) {
     if(e.shiftKey) {
         ct_g_selected_text_list.push(ct_g_current_text);
-        // console.log(ct_g_selected_text_list);
         chrome.storage.sync.set({ ct_g_selected_text_list });
         ct_f_make_list();
     }
@@ -67,13 +65,9 @@ function ct_f_copyToClipBoard(clicked_text) {
     document.execCommand('copy');
 }
 
-let ct_g_clicked_text = '';
 ct_g_new_div.addEventListener('click', function (e) {
-    ct_g_clicked_text = e.target.innerText;
-    ct_f_copyToClipBoard(ct_g_clicked_text);
+    ct_f_copyToClipBoard(e.target.innerText);
 });
-
-let ct_g_div_selected_text_list = document.getElementById('ct_g_div_selected_text_list');
 
 function ct_f_make_list() {
     let inner_html = '<ul>';
@@ -81,5 +75,6 @@ function ct_f_make_list() {
         inner_html += `<li style="padding: 5px; cursor: pointer;">${element}</li>`
     });
     inner_html += '</ul>';
-    ct_g_div_selected_text_list.innerHTML = inner_html;
+    let selected_text_list = document.getElementById('ct_g_div_selected_text_list');
+    selected_text_list.innerHTML = inner_html;
 }
