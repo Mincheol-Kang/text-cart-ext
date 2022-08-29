@@ -68,7 +68,7 @@ ct_g_div_selected_text_list.onclick = function (e) {
 }
 
 function ct_f_make_list() {
-    let inner_html = '<ul style="margin: 5px; padding-inline-start: 0px;">';
+    let inner_html = '<ul style="margin: 10px; padding-inline-start: 5px;">';
     ct_g_selected_text_list.forEach(element => {
         inner_html += `<li style="padding: 0px 3px; cursor: pointer;">${element}</li>`
     });
