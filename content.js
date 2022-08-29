@@ -35,11 +35,8 @@ document.body.appendChild(ct_g_new_div);
 const ct_g_toggle_div = document.createElement("div");
 ct_g_toggle_div.innerHTML = `<div style="padding: 5px;"><input type="checkbox" id="ct_g_i_checkbox_toggle" checked></div>`
 ct_g_toggle_div.style.border = "1px solid green";
-// ct_g_toggle_div.style.padding = "10px";
-// ct_g_toggle_div.style.color = "black";
 ct_g_toggle_div.style.background = "white";
 ct_g_toggle_div.style.position = "fixed";
-// ct_g_toggle_div.style.overflow = "auto";
 ct_g_toggle_div.style.zIndex = "99990000000001";
 ct_g_toggle_div.style.width = "50px";
 ct_g_toggle_div.style.height = "50px";
