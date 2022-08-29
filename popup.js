@@ -6,20 +6,17 @@ window.onload = function(){
         document.execCommand('copy');
     }
 
-    let clicked_text = '';
     document.addEventListener('click', function (e) {
-        clicked_text = e.target.innerText;
-        copyToClipBoard(clicked_text);
+        copyToClipBoard(e.target.innerText);
     });
     
-    let div_selected_text_list = document.getElementById('div_selected_text_list');
-
     chrome.storage.sync.get('ct_g_selected_text_list', ({ ct_g_selected_text_list }) => {
         let inner_html = '<ul>';
         ct_g_selected_text_list.forEach(element => {
             inner_html += `<li>${element}</li>`
         });
         inner_html += '</ul>';
+        let div_selected_text_list = document.getElementById('div_selected_text_list');
         div_selected_text_list.innerHTML = inner_html;
     });
 }
