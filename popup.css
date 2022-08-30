@@ -1,7 +1,10 @@
 .notice {
     padding: 5px;
     border: thick solid #0000FF;
-    margin-bottom: 5px;
+}
+.list-toggle {
+    padding: 5px;
+    cursor: pointer;
 }
 .text-list {
     width: 300px;

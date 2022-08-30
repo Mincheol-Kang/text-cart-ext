@@ -15,19 +15,34 @@ window.onload = function(){
     
     chrome.storage.sync.get('ct_g_selected_text_list', ({ ct_g_selected_text_list }) => {
         selected_text_list = ct_g_selected_text_list;
-        let inner_html = '<ul>';
-        selected_text_list.forEach(element => {
-            inner_html += `<li>${element}</li>`
-        });
-        inner_html += '</ul>';
-        div_selected_text_list.innerHTML = inner_html;
+        if(selected_text_list.length > 0) {
+            let inner_html = '<ul>';
+            selected_text_list.forEach(element => {
+                inner_html += `<li>${element}</li>`
+            });
+            inner_html += '</ul>';
+            div_selected_text_list.innerHTML = inner_html;
+        }
     });
 
     const sendMessageButton = document.getElementById('sendMessage')
     sendMessageButton.onclick = async function(e) {
         let queryOptions = { active: true, currentWindow: true };
         let tabs = await chrome.tabs.query(queryOptions);
-    
         chrome.tabs.sendMessage(tabs[0].id, {text_list: selected_text_list});
     }
+
+    const div_list_toggle = document.getElementById('div_list_toggle')
+    const i_list_toggle   = document.getElementById('i_list_toggle')
+    div_list_toggle.onclick = async function(e) {
+        const is_toggle_checked = !i_list_toggle.checked;
+        const sidebar_show = (is_toggle_checked ? 'yes' : 'no');
+        let queryOptions = { active: true, currentWindow: true };
+        let tabs = await chrome.tabs.query(queryOptions);
+        chrome.tabs.sendMessage(tabs[0].id, {sidebar_show});
+        i_list_toggle.checked = is_toggle_checked;
+    }
+    chrome.storage.sync.get(['ct_g_sidebar_show'], function(result) {
+        i_list_toggle.checked = result.ct_g_sidebar_show;
+    });    
 }
