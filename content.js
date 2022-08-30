@@ -86,5 +86,6 @@ chrome.runtime.onMessage.addListener(
             ct_g_selected_text_list = request.text_list;
             ct_f_make_list();
         }
+        sendResponse({farewell: "ok"});
     }
 );
