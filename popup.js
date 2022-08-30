@@ -13,7 +13,7 @@ window.onload = function(){
 
     let selected_text_list = [];
     
-    chrome.storage.sync.get('ct_g_selected_text_list', ({ ct_g_selected_text_list }) => {
+    chrome.storage.local.get('ct_g_selected_text_list', ({ ct_g_selected_text_list }) => {
         selected_text_list = ct_g_selected_text_list;
         if(selected_text_list.length > 0) {
             let inner_html = '<ul>';
@@ -42,7 +42,7 @@ window.onload = function(){
         chrome.tabs.sendMessage(tabs[0].id, {sidebar_show});
         i_list_toggle.checked = is_toggle_checked;
     }
-    chrome.storage.sync.get(['ct_g_sidebar_show'], function(result) {
+    chrome.storage.local.get(['ct_g_sidebar_show'], function(result) {
         i_list_toggle.checked = result.ct_g_sidebar_show;
     });    
 }

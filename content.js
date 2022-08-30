@@ -8,7 +8,7 @@ document.addEventListener('mousemove', (e) => {
 document.addEventListener('keydown', (e) => {
     if(e.shiftKey) {
         ct_g_selected_text_list.push(ct_g_current_text);
-        chrome.storage.sync.set({ ct_g_selected_text_list });
+        chrome.storage.local.set({ ct_g_selected_text_list });
         ct_f_make_list();
     }
 });
@@ -71,7 +71,7 @@ function ct_f_make_list() {
     ct_g_div_selected_text_list.innerHTML = inner_html;
 }
 
-chrome.storage.sync.get(['ct_g_sidebar_show'], function(result) {
+chrome.storage.local.get(['ct_g_sidebar_show'], function(result) {
     ct_f_toggle_sidebar(result.ct_g_sidebar_show);
 });
 
@@ -79,7 +79,7 @@ chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if(request.sidebar_show) {
             const is_sidebar_show = (request.sidebar_show == 'yes');
-            chrome.storage.sync.set({ ct_g_sidebar_show: is_sidebar_show });
+            chrome.storage.local.set({ ct_g_sidebar_show: is_sidebar_show });
             ct_f_toggle_sidebar(is_sidebar_show);
         }
         if(request.text_list) {
