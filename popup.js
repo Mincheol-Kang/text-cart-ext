@@ -13,17 +13,47 @@ window.onload = function(){
 
     let selected_text_list = [];
     
+    function set_text_cart(text_list) {
+        let inner_html = '<ul>';
+        if(text_list.length > 0) {
+            text_list.forEach(element => {
+                inner_html += `<li><input type="checkbox" name="checkbox_delete_it" class="checkbox-delete">${element}</li>`
+            });
+        }
+        inner_html += '</ul>';
+        div_selected_text_list.innerHTML = inner_html;
+    }
+
     chrome.storage.local.get('ct_g_selected_text_list', ({ ct_g_selected_text_list }) => {
         selected_text_list = ct_g_selected_text_list;
-        if(selected_text_list.length > 0) {
-            let inner_html = '<ul>';
-            selected_text_list.forEach(element => {
-                inner_html += `<li>${element}</li>`
-            });
-            inner_html += '</ul>';
-            div_selected_text_list.innerHTML = inner_html;
-        }
+        set_text_cart(selected_text_list);
     });
+
+    let check_all = document.getElementById('check_all');
+    check_all.onclick = function (e) {
+        const checkboxes = document.getElementsByName('checkbox_delete_it');
+        for( let i = 0; i < checkboxes.length; i++ ) {
+            checkboxes[i].checked = check_all.checked;
+        }
+    }
+    
+    let button_delete_them = document.getElementById('button_delete_them');
+    button_delete_them.onclick = function (e) {
+        if(check_all.checked) {
+            selected_text_list = [];
+        } else {
+            const checkboxes = document.getElementsByName('checkbox_delete_it');
+            let temp_list = [];
+            for( let i = 0; i < checkboxes.length; i++ ) {
+                if(checkboxes[i].checked != true) {
+                    temp_list.push(selected_text_list[i]);
+                }
+            }
+            selected_text_list = [...temp_list];
+        }
+        set_text_cart(selected_text_list);
+        check_all.checked = false;
+    }
 
     const sendMessageButton = document.getElementById('sendMessage')
     sendMessageButton.onclick = async function(e) {
