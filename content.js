@@ -16,6 +16,7 @@ document.addEventListener('keydown', (e) => {
 const ct_g_new_div = document.createElement("div");
 ct_g_new_div.innerHTML = `<div style="padding: 5px;"><b>
 웹페이지에서 텍스트를 커서로 가리킨채 Shift 키를 누르면 텍스트 바구니에 담깁니다.</b></div>
+<button id="ct_g_button_delete_them">체크박스 선택 항목 지우기</button>
 <div id="ct_g_div_selected_text_list">
 텍스트 바구니가 비어 있습니다.</div>
 복사된 텍스트: <textarea id="ct_g_textArea"></textarea>`
@@ -52,6 +53,18 @@ ct_g_div_selected_text_list.onclick = function (e) {
     ct_f_copyToClipBoard(e.target.innerText);
 }
 
+let ct_g_button_delete_them = document.getElementById('ct_g_button_delete_them');
+ct_g_button_delete_them.onclick = function (e) {
+    const checkboxes = document.getElementsByName('ct_g_checkbox_delete_it');
+    for( let i = 0; i < checkboxes.length; i++ ) {
+        if(checkboxes[i].checked) {
+            ct_g_selected_text_list.splice(i, 1);
+        }
+    }
+    chrome.storage.local.set({ ct_g_selected_text_list });
+    ct_f_make_list();
+}
+
 function ct_f_toggle_sidebar(is_sidebar_show) {
     if(is_sidebar_show) {
         ct_g_new_div.style.display = 'block';
@@ -64,8 +77,8 @@ function ct_f_toggle_sidebar(is_sidebar_show) {
 
 function ct_f_make_list() {
     let inner_html = '<ul id="ct_g_ul_text_list">';
-    ct_g_selected_text_list.forEach(element => {
-        inner_html += `<li class="ct_g_li_text_list">${element}</li>`
+    ct_g_selected_text_list.forEach((element, index) => {
+        inner_html += `<li class="ct_g_li_text_list"><input type="checkbox" name="ct_g_checkbox_delete_it"> ${element}</li>`
     });
     inner_html += '</ul>';
     ct_g_div_selected_text_list.innerHTML = inner_html;
