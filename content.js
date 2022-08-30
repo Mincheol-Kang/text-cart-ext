@@ -100,17 +100,21 @@ chrome.storage.local.get(['ct_g_sidebar_show'], function(result) {
     ct_f_toggle_sidebar(result.ct_g_sidebar_show);
 });
 
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-        if(request.sidebar_show) {
-            const is_sidebar_show = (request.sidebar_show == 'yes');
-            chrome.storage.local.set({ ct_g_sidebar_show: is_sidebar_show });
-            ct_f_toggle_sidebar(is_sidebar_show);
+try {
+    chrome.runtime.onMessage.addListener(
+        function(request, sender, sendResponse) {
+            if(request.sidebar_show) {
+                const is_sidebar_show = (request.sidebar_show == 'yes');
+                chrome.storage.local.set({ ct_g_sidebar_show: is_sidebar_show });
+                ct_f_toggle_sidebar(is_sidebar_show);
+            }
+            if(request.text_list) {
+                ct_g_selected_text_list = request.text_list;
+                ct_f_make_list();
+            }
+            sendResponse({farewell: "ok"});
         }
-        if(request.text_list) {
-            ct_g_selected_text_list = request.text_list;
-            ct_f_make_list();
-        }
-        sendResponse({farewell: "ok"});
-    }
-);
+    );
+} catch(e) {
+    console.error(e);
+}

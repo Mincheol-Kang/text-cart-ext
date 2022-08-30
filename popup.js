@@ -59,9 +59,13 @@ window.onload = function(){
     sendMessageButton.onclick = async function(e) {
         let queryOptions = { active: true, currentWindow: true };
         let tabs = await chrome.tabs.query(queryOptions);
-        chrome.tabs.sendMessage(tabs[0].id, {text_list: selected_text_list}, function(response) {
-            console.log(response.farewell);
-        });
+        try {
+            chrome.tabs.sendMessage(tabs[0].id, {text_list: selected_text_list}, function(response) {
+                console.log(response.farewell);
+            });
+        } catch(e) {
+            console.error(e);
+        }
     }
 
     const div_list_toggle = document.getElementById('div_list_toggle')
@@ -71,9 +75,13 @@ window.onload = function(){
         const sidebar_show = (is_toggle_checked ? 'yes' : 'no');
         let queryOptions = { active: true, currentWindow: true };
         let tabs = await chrome.tabs.query(queryOptions);
-        chrome.tabs.sendMessage(tabs[0].id, {sidebar_show}, function(response) {
-            console.log(response.farewell);
-        });
+        try {
+            chrome.tabs.sendMessage(tabs[0].id, {sidebar_show}, function(response) {
+                console.log(response.farewell);
+            });
+        } catch(e) {
+            console.error(e);
+        }
         i_list_toggle.checked = is_toggle_checked;
     }
     chrome.storage.local.get(['ct_g_sidebar_show'], function(result) {

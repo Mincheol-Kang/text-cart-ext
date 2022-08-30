@@ -5,6 +5,7 @@
 .list-toggle {
     padding: 5px;
     cursor: pointer;
+    text-align: center;
 }
 .div-send-msg {
     text-align: center;
