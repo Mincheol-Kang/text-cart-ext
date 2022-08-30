@@ -63,6 +63,6 @@ chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         ct_g_selected_text_list = request.text_list;
         ct_f_make_list();
-        sendResponse({status: "done"});
+        // sendResponse({status: "done"});
     }
 );

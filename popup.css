@@ -1,0 +1,26 @@
+.notice {
+    padding: 5px;
+    border: thick solid #0000FF;
+    margin-bottom: 5px;
+}
+.text-list {
+    width: 300px;
+    border: 1px dotted green;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+textarea {
+    width: 300px;
+    height: 20px;
+}
+ul {
+    margin-left: 10px;
+    padding-inline-start: 5px;
+}
+li {
+    padding: 5px 0px;
+    cursor: pointer;
+}
+li:hover {
+    background-color:yellow;
+}
