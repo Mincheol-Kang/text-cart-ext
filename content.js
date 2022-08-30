@@ -18,9 +18,10 @@ ct_g_new_div.innerHTML = `<div style="padding: 5px;"><b>
 웹페이지에서 텍스트를 커서로 가리킨채 Shift 키를 누르면 텍스트 바구니에 담깁니다.</b></div>
 <input type="checkbox" id="ct_g_i_check_all">
 <button id="ct_g_button_delete_them">체크박스 선택 항목 지우기</button>
-<div id="ct_g_div_selected_text_list">
-텍스트 바구니가 비어 있습니다.</div>
-복사된 텍스트: <textarea id="ct_g_textArea"></textarea>`
+<div id="ct_g_div_selected_text_list"><ul></ul></div>
+<span class="ct_g_span_copied_text">복사된 텍스트: </span>
+<textarea id="ct_g_textArea"></textarea>
+<button id="ct_g_button_add_text">⇪ 위 입력란의 텍스트를 리스트에 추가하기 ⇪</button>`
 ct_g_new_div.className = 'ct_g_new_div';
 ct_g_new_div.style.display = 'none';
 document.body.appendChild(ct_g_new_div);
@@ -52,6 +53,17 @@ function ct_f_copyToClipBoard(clicked_text) {
 let ct_g_div_selected_text_list = document.getElementById('ct_g_div_selected_text_list');
 ct_g_div_selected_text_list.onclick = function (e) {
     ct_f_copyToClipBoard(e.target.innerText);
+}
+
+let ct_g_button_add_text = document.getElementById('ct_g_button_add_text');
+let ct_g_textArea = document.getElementById('ct_g_textArea');
+ct_g_textArea.onclick = function (e) {
+    ct_g_textArea.select();
+}
+ct_g_button_add_text.onclick = function (e) {
+    ct_g_selected_text_list.push(ct_g_textArea.value);
+    chrome.storage.local.set({ ct_g_selected_text_list });
+    ct_f_make_list();
 }
 
 let ct_g_i_check_all = document.getElementById('ct_g_i_check_all');

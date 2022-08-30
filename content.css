@@ -43,3 +43,12 @@
 .ct_g_li_text_list:hover {
     background-color:yellow;
 }
+#ct_g_i_check_all {
+    vertical-align: middle;
+}
+.ct_g_div_align_center {
+    text-align: center;
+}
+.ct_g_span_copied_text {
+    color: darkgray;
+}

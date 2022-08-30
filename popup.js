@@ -36,7 +36,17 @@ window.onload = function(){
             checkboxes[i].checked = check_all.checked;
         }
     }
-    
+
+    let button_add_text = document.getElementById('button_add_text');
+    let textArea = document.getElementById('textArea');
+    textArea.onclick = function (e) {
+        textArea.select();
+    }
+    button_add_text.onclick = function (e) {
+        selected_text_list.push(textArea.value);
+        set_text_cart(selected_text_list);
+    }
+
     let button_delete_them = document.getElementById('button_delete_them');
     button_delete_them.onclick = function (e) {
         if(check_all.checked) {
