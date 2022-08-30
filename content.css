@@ -32,7 +32,8 @@
     height: 50px;
 }
 #ct_g_ul_text_list {
-    margin: 10px;
+    list-style: none;
+    margin: 5px;
     padding-inline-start: 5px;
 }
 .ct_g_li_text_list {
