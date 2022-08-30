@@ -16,6 +16,7 @@ document.addEventListener('keydown', (e) => {
 const ct_g_new_div = document.createElement("div");
 ct_g_new_div.innerHTML = `<div style="padding: 5px;"><b>
 웹페이지에서 텍스트를 커서로 가리킨채 Shift 키를 누르면 텍스트 바구니에 담깁니다.</b></div>
+<input type="checkbox" id="ct_g_i_check_all">
 <button id="ct_g_button_delete_them">체크박스 선택 항목 지우기</button>
 <div id="ct_g_div_selected_text_list">
 텍스트 바구니가 비어 있습니다.</div>
@@ -53,16 +54,27 @@ ct_g_div_selected_text_list.onclick = function (e) {
     ct_f_copyToClipBoard(e.target.innerText);
 }
 
+let ct_g_i_check_all = document.getElementById('ct_g_i_check_all');
+ct_g_i_check_all.onclick = function (e) {
+    const checkboxes = document.getElementsByName('ct_g_checkbox_delete_it');
+    for( let i = 0; i < checkboxes.length; i++ ) {
+        checkboxes[i].checked = ct_g_i_check_all.checked;
+    }
+}
+
 let ct_g_button_delete_them = document.getElementById('ct_g_button_delete_them');
 ct_g_button_delete_them.onclick = function (e) {
     const checkboxes = document.getElementsByName('ct_g_checkbox_delete_it');
+    let temp_list = [];
     for( let i = 0; i < checkboxes.length; i++ ) {
-        if(checkboxes[i].checked) {
-            ct_g_selected_text_list.splice(i, 1);
+        if(checkboxes[i].checked != true) {
+            temp_list.push(ct_g_selected_text_list[i]);
         }
     }
+    ct_g_selected_text_list = [...temp_list];
     chrome.storage.local.set({ ct_g_selected_text_list });
     ct_f_make_list();
+    ct_g_i_check_all.checked = false;
 }
 
 function ct_f_toggle_sidebar(is_sidebar_show) {
