@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Text Carts",
+    "name": "Text Cart",
     "description": "사용자가 찜한 텍스트들을 담아두는 텍스트 바구니",
     "version": "1.2.0",
     "background": {
