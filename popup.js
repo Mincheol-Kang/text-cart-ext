@@ -16,7 +16,7 @@ window.onload = function(){
     chrome.storage.sync.get('ct_g_selected_text_list', ({ ct_g_selected_text_list }) => {
         selected_text_list = ct_g_selected_text_list;
         let inner_html = '<ul>';
-        ct_g_selected_text_list.forEach(element => {
+        selected_text_list.forEach(element => {
             inner_html += `<li>${element}</li>`
         });
         inner_html += '</ul>';
@@ -28,8 +28,6 @@ window.onload = function(){
         let queryOptions = { active: true, currentWindow: true };
         let tabs = await chrome.tabs.query(queryOptions);
     
-        chrome.tabs.sendMessage(tabs[0].id, {text_list: selected_text_list}, function(response) {
-            console.log(response.status);
-        });
+        chrome.tabs.sendMessage(tabs[0].id, {text_list: selected_text_list});
     }
 }
