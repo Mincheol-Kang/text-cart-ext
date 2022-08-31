@@ -13,6 +13,10 @@ window.onload = function(){
 
     let selected_text_list = [];
     
+    function save_text_list(ct_g_selected_text_list) {
+        chrome.storage.local.set({ ct_g_selected_text_list });
+    }
+
     function set_text_cart(text_list) {
         let inner_html = '<ul>';
         if(text_list.length > 0) {
@@ -22,6 +26,7 @@ window.onload = function(){
         }
         inner_html += '</ul>';
         div_selected_text_list.innerHTML = inner_html;
+        save_text_list(text_list)
     }
 
     chrome.storage.local.get('ct_g_selected_text_list', ({ ct_g_selected_text_list }) => {
