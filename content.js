@@ -23,13 +23,11 @@ ct_g_new_div.innerHTML = `<div style="padding: 5px;"><b>
 <textarea id="ct_g_textArea"></textarea>
 <button id="ct_g_button_add_text">⇪ 위 입력란의 텍스트를 리스트에 추가하기 ⇪</button>`
 ct_g_new_div.className = 'ct_g_new_div';
-ct_g_new_div.style.display = 'none';
 document.body.appendChild(ct_g_new_div);
 
 const ct_g_toggle_div = document.createElement("div");
 ct_g_toggle_div.innerHTML = `<div style="padding: 5px;"><input type="checkbox" id="ct_g_i_checkbox_toggle" checked></div>`
 ct_g_toggle_div.className = 'ct_g_toggle_div';
-ct_g_toggle_div.style.display = 'none';
 document.body.appendChild(ct_g_toggle_div);
 
 ct_g_toggle_div.addEventListener('click', function (e) {
@@ -55,11 +53,12 @@ ct_g_div_selected_text_list.onclick = function (e) {
     ct_f_copyToClipBoard(e.target.innerText);
 }
 
-let ct_g_button_add_text = document.getElementById('ct_g_button_add_text');
 let ct_g_textArea = document.getElementById('ct_g_textArea');
 ct_g_textArea.onclick = function (e) {
     ct_g_textArea.select();
 }
+
+let ct_g_button_add_text = document.getElementById('ct_g_button_add_text');
 ct_g_button_add_text.onclick = function (e) {
     ct_g_selected_text_list.push(ct_g_textArea.value);
     chrome.storage.local.set({ ct_g_selected_text_list });
