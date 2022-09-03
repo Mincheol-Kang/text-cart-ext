@@ -86,9 +86,9 @@ function ct_f_toggle_sidebar(is_sidebar_show) {
     }
 }
 
-function ct_f_make_list(text_list) {
+function ct_f_make_list(text_list=[]) {
     let inner_html = '<ul id="ct_g_ul_text_list">';
-    text_list.forEach((element, index) => {
+    text_list.forEach(element => {
         inner_html += `<li class="ct_g_li_text_list"><input type="checkbox" name="ct_g_checkbox_delete_it"> ${element}</li>`
     });
     inner_html += '</ul>';

@@ -17,13 +17,11 @@ window.onload = function(){
         chrome.storage.local.set({ ct_g_selected_text_list });
     }
 
-    function set_text_cart(text_list) {
+    function set_text_cart(text_list=[]) {
         let inner_html = '<ul>';
-        if(text_list.length > 0) {
-            text_list.forEach(element => {
-                inner_html += `<li><input type="checkbox" name="checkbox_delete_it" class="checkbox-delete">${element}</li>`
-            });
-        }
+        text_list.forEach(element => {
+            inner_html += `<li><input type="checkbox" name="checkbox_delete_it" class="checkbox-delete">${element}</li>`
+        });
         inner_html += '</ul>';
         div_selected_text_list.innerHTML = inner_html;
         save_text_list(text_list)
