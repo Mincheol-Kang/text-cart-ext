@@ -9,7 +9,7 @@ document.addEventListener('keydown', (e) => {
     if(e.shiftKey) {
         ct_g_selected_text_list.push(ct_g_current_text);
         chrome.storage.local.set({ ct_g_selected_text_list });
-        ct_f_make_list();
+        ct_f_make_list(ct_g_selected_text_list);
     }
 });
 
@@ -62,7 +62,7 @@ let ct_g_button_add_text = document.getElementById('ct_g_button_add_text');
 ct_g_button_add_text.onclick = function (e) {
     ct_g_selected_text_list.push(ct_g_textArea.value);
     chrome.storage.local.set({ ct_g_selected_text_list });
-    ct_f_make_list();
+    ct_f_make_list(ct_g_selected_text_list);
 }
 
 let ct_g_i_check_all = document.getElementById('ct_g_i_check_all');
@@ -84,7 +84,7 @@ ct_g_button_delete_them.onclick = function (e) {
     }
     ct_g_selected_text_list = [...temp_list];
     chrome.storage.local.set({ ct_g_selected_text_list });
-    ct_f_make_list();
+    ct_f_make_list(ct_g_selected_text_list);
     ct_g_i_check_all.checked = false;
 }
 
@@ -98,9 +98,9 @@ function ct_f_toggle_sidebar(is_sidebar_show) {
     }
 }
 
-function ct_f_make_list() {
+function ct_f_make_list(text_list) {
     let inner_html = '<ul id="ct_g_ul_text_list">';
-    ct_g_selected_text_list.forEach((element, index) => {
+    text_list.forEach((element, index) => {
         inner_html += `<li class="ct_g_li_text_list"><input type="checkbox" name="ct_g_checkbox_delete_it"> ${element}</li>`
     });
     inner_html += '</ul>';
@@ -109,6 +109,12 @@ function ct_f_make_list() {
 
 chrome.storage.local.get(['ct_g_sidebar_show'], function(result) {
     ct_f_toggle_sidebar(result.ct_g_sidebar_show);
+});
+
+chrome.storage.local.get(['ct_g_selected_text_list'], function(result) {
+    console.log('ct_g_selected_text_list::result', result.ct_g_selected_text_list);
+    ct_g_selected_text_list = result.ct_g_selected_text_list;
+    ct_f_make_list(ct_g_selected_text_list);
 });
 
 try {
@@ -121,7 +127,7 @@ try {
             }
             if(request.text_list) {
                 ct_g_selected_text_list = request.text_list;
-                ct_f_make_list();
+                ct_f_make_list(request.text_list);
             }
             sendResponse({farewell: "ok"});
         }
