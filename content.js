@@ -1,18 +1,6 @@
 let ct_g_selected_text_list = [];
 let ct_g_current_text = '';
 
-document.addEventListener('mousemove', (e) => {
-    ct_g_current_text = e.target.innerText;
-});
-
-document.addEventListener('keydown', (e) => {
-    if(e.shiftKey) {
-        ct_g_selected_text_list.push(ct_g_current_text);
-        chrome.storage.local.set({ ct_g_selected_text_list });
-        ct_f_make_list(ct_g_selected_text_list);
-    }
-});
-
 const ct_g_new_div = document.createElement("div");
 ct_g_new_div.innerHTML = `<div style="padding: 5px;"><b>
 웹페이지에서 텍스트를 커서로 가리킨채 Shift 키를 누르면 텍스트 바구니에 담깁니다.</b></div>
@@ -115,6 +103,18 @@ chrome.storage.local.get(['ct_g_selected_text_list'], function(result) {
     console.log('ct_g_selected_text_list::result', result.ct_g_selected_text_list);
     ct_g_selected_text_list = result.ct_g_selected_text_list;
     ct_f_make_list(ct_g_selected_text_list);
+});
+
+document.addEventListener('mousemove', (e) => {
+    ct_g_current_text = e.target.innerText;
+});
+
+document.addEventListener('keydown', (e) => {
+    if(e.shiftKey) {
+        ct_g_selected_text_list.push(ct_g_current_text);
+        chrome.storage.local.set({ ct_g_selected_text_list });
+        ct_f_make_list(ct_g_selected_text_list);
+    }
 });
 
 try {
